@@ -1,0 +1,10 @@
+.ticks .tick text {
+    color:white;
+    fill:white !important;
+    font-size: 9px !important;
+}
+
+.tooltip-wrap * {
+    font-size: 9px !important;
+    line-height: 9px;
+}
