@@ -1,4 +1,5 @@
 const example = require('./example');
-const lannister = require('./house-lannister');
+const timings = require('./timings');
+const lannister = require('./lannister');
 
-module.exports = {example, lannister};
+module.exports = {example, lannister, timings};
