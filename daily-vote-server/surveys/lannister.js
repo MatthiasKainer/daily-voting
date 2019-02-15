@@ -20,7 +20,7 @@ const survey = {
       "question": "Is there someone at work who encourages your development?"
     },
     {
-      "question": "Do yout opinions seem to count?"
+      "question": "Do your opinions seem to count?"
     },
     {
       "question": "Are you made to feel that your work is important?"
