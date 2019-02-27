@@ -25,15 +25,17 @@ function notifyUsers() {
     });
 }
 
-function notifyUserForSurvey({ survey, subscriber }) {
+function notifyUserForSurvey({ survey, subscriber: subscribers }) {
     return storage.getQuestionOfTheDay({
         survey: survey,
         forDate: new Date().toISOString()
     }).then(({ question }) =>
-        storage.generateVotingIds(survey, subscriber.length)
-            .then(ids => send(subscriber.map((email, index) =>
-                prepare(email, survey, question, ids[index].toString())
-            )))
+        storage.generateVotingIds(survey, subscribers.length)
+            .then(ids => {
+                subscribers.forEach((subscriber, index) => {
+                    send(prepare(subscriber, survey, question, ids[index].toString()), subscriber);
+                })
+            })
     ).catch(err => {
         console.log(`could not send emails for survey ${survey}!`);
         console.log(err);
@@ -62,10 +64,10 @@ function prepare(to, survey, todaysQuestion, id) {
 }
 
 function send(messages) {
-    sgMail.send(messages).catch(error => {
+    return sgMail.send(messages).catch(error => {
         //Log friendly error
         console.error(error.toString());
-        console.log(`Messages could not be send!`)
+        console.log(`Messages could not be send to ${messages.to}!`)
     });
 }
 
