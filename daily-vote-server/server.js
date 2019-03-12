@@ -20,15 +20,25 @@ app.get("/api", (req, res, next) => {
 });
 
 app.get("/api/:survey", (req, res) => {
-    storage.getAllQuestionsForSurvey(req.params.survey).then(survey =>
+    storage.getAllQuestionsForSurvey(req.params.survey).then(survey => {
         res.send({ success: true, survey })
-    );
+    });
 });
 
 app.get("/api/:survey/votes", (req, res) => {
-    storage.getAllVotesForSurvey(req.params.survey).then(votes =>
-        res.send({ success: true, votes })
-    );
+    console.log(req.headers['content-type']);
+    storage.getAllVotesForSurvey(req.params.survey).then(votes =>{
+        if (req.headers['content-type'] === "text/csv") {
+            res.set('Content-Type', 'text/csv');
+            res.set('Content-Disposition', 'attachment; filename="votes.csv"');
+            const headers = Object.keys(votes);
+            let result = `${headers.join(',')}`;
+            result += votes.map(vote => {
+                return headers.map((header) => vote[header]).join(",") + "\n"
+            })
+            res.send(result);
+        } else res.send({ success: true, votes })
+    });
 });
 
 app.get("/api/:survey/question/now", (req, res) => {
