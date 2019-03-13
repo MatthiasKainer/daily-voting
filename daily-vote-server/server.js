@@ -31,11 +31,31 @@ app.get("/api/:survey/votes", (req, res) => {
         if (req.headers['content-type'] === "text/csv") {
             res.set('Content-Type', 'text/csv');
             res.set('Content-Disposition', 'attachment; filename="votes.csv"');
-            const headers = Object.keys(votes);
-            let result = `${headers.join(',')}`;
-            result += votes.map(vote => {
-                return headers.map((header) => vote[header]).join(",") + "\n"
-            })
+            if (!votes || votes.length < 1) {
+                return res.send();
+            }
+
+            const headers = ["question", "round", "date", "rating", "totalRatings"]
+            let result = `${headers.join(',')}\n`;
+            const part = votes.reduce((result, vote) => {
+                const {question, rating} = vote; 
+                const date = vote.date.toJSON().slice(0,10);
+                result[question] = result[question] || {}
+                result[question][date] = result[question][date] || {sum: 0, count: 0};
+
+                result[question][date].sum += rating;
+                result[question][date].count++;
+                return result;
+            }, {})
+            Object.keys(part).forEach(question => {
+                Object.keys(part[question]).forEach((date, index) => {
+                    const item = part[question][date];
+                    console.log(part)
+                    console.log(`${question}, ${date}`)
+                    console.log(item)
+                    result += `"${question}",${index+1},${date},${(item.sum / item.count).toLocaleString("de")},${item.count}\n`;
+                })
+            }) 
             res.send(result);
         } else res.send({ success: true, votes })
     });
@@ -84,7 +104,7 @@ app.post("/api/:survey/voteId", (req, res) => {
     }
 
     storage.generateVotingIds(survey, 1).then(ids => {
-        res.send(ids);
+        res.send({ids, yes: `/api/${survey}/vote/1/${ids[0]}`, no: `/api/${survey}/vote/-1/${ids[0]}`});
     })
 })
 app.post("/api/:survey/notify", (req, res) => {
