@@ -25,7 +25,7 @@ function notifyUsers() {
     });
 }
 
-function notifyUserForSurvey({ survey, subscriber: subscribers }) {
+function notifyUserForSurvey({ survey, subscribers }) {
     return storage.getQuestionOfTheDay({
         survey: survey,
         forDate: new Date().toISOString()
@@ -33,7 +33,10 @@ function notifyUserForSurvey({ survey, subscriber: subscribers }) {
         storage.generateVotingIds(survey, subscribers.length)
             .then(ids => {
                 subscribers.forEach((subscriber, index) => {
-                    send(prepare(subscriber, survey, question, ids[index].toString()), subscriber);
+                    // set no more then one email every second
+                    setTimeout(() => 
+                        send(prepare(subscriber, survey, question, ids[index].toString()), subscriber)
+                    , 1000 * index)
                 })
             })
     ).catch(err => {
@@ -63,11 +66,15 @@ function prepare(to, survey, todaysQuestion, id) {
     return msg;
 }
 
-function send(messages) {
+function send(messages, retry) {
+    if (retry === undefined) { retry = 4; }
     return sgMail.send(messages).catch(error => {
+        // try again in 5 sec if retry allows it 
+        if (retry > 0)
+            setTimeout(() => send(messages, retry-1, 5000));
         //Log friendly error
-        console.error(error.toString());
-        console.log(`Messages could not be send to ${messages.to}!`)
+        console.error(error);
+        console.log(`Messages could not be send to ${messages.to}! Trying again for ${retry} times`)
     });
 }
 

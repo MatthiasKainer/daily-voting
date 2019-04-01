@@ -115,7 +115,7 @@ app.post("/api/:survey/notify", (req, res) => {
 
     storage.getAllSurveysFull().then(surveys => {
         const { subscriber } = surveys[survey];
-        return notifyUserForSurvey({survey, subscriber});
+        return notifyUserForSurvey({survey, subscribers : subscriber });
     })
     .then(() => {
         res.send("sent...")
