@@ -17,7 +17,7 @@ function notifyUsers() {
     return storage.getAllSurveysFull().then(surveys => {
         Object.keys(surveys).forEach(survey => {
             const { subscriber } = surveys[survey];
-            notifyUserForSurvey({ survey, subscriber });
+            notifyUserForSurvey({ survey, subscribers: subscriber });
         })
     }).catch(err => {
         console.log("could not send (all) emails!");
