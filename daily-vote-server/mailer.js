@@ -35,7 +35,7 @@ function notifyUserForSurvey({ survey, subscribers }) {
                 subscribers.forEach((subscriber, index) => {
                     // set no more then one email every second
                     setTimeout(() => 
-                        send(prepare(subscriber, survey, question, ids[index].toString()), subscriber)
+                        send(prepare(subscriber, survey, question, ids[index].toString()))
                     , 1000 * index)
                 })
             })
