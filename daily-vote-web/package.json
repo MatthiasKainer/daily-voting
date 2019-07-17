@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "chart.js": "^2.8.0",
     "luxon": "^1.4.4",
     "react": "^16.6.0",
     "react-chartjs": "^1.2.0",
+    "react-chartkick": "^0.3.2",
     "react-charts": "^1.0.10",
     "react-dom": "^16.6.0",
     "react-redux": "^5.1.0",

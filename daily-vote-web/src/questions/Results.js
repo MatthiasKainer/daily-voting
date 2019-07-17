@@ -14,14 +14,11 @@ const Results = ({ question, votes }) => {
     }, 0);
 
     return <div>
-    <p className="splash-subhead">
-        {question}
+        <p className="splash-subhead">
+            {question}
             <div style={{ fontSize: 'small' }}>Up {upVotes} | Down {downVotes}</div>
-    </p>
-        <h1 className="splash-head">
-            <div style={{ fontSize: 'small' }}>Results</div>
-            <div style={{ height: 600, position: 'relative' }}><Chart data={data} /></div>
-        </h1>
+        </p>
+        <div style={{ backgroundColor: 'white', borderRadius: 3, position: 'relative' }}><Chart data={data} /></div>
     </div>;
 }
 
