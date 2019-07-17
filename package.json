@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "generate-surveys" : "node encrypt-emails.js",
+    "generate-surveys": "node encrypt-emails.js",
     "start": "npm run server",
     "start-all": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd daily-vote-server && npm install && node server.js",
