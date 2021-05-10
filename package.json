@@ -7,6 +7,9 @@
     "generate-surveys": "node encrypt-emails.js",
     "start": "npm run server",
     "start-all": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "concurrently \"npm run test:server\" \"npm run test:client\"",
+    "test:client": "cd daily-vote-web && npm test",
+    "test:server": "cd daily-vote-server && npm test",
     "server": "cd daily-vote-server && npm install && node server.js",
     "client": "cd daily-vote-web && npm install && npm start",
     "deploy": "cd daily-vote-web && npm run build && cd .. && rm -rf daily-vote-server/public && mkdir daily-vote-server/public && cp -r daily-vote-web/build/* daily-vote-server/public && (git add daily-vote-server/public && git commit -m\"created new deployment\") || true && cd daily-vote-server && cd .. && git push heroku master --force"
@@ -14,7 +17,7 @@
   "author": "mkainer",
   "license": "MIT",
   "dependencies": {
-    "concurrently": "^4.0.1",
+    "concurrently": "^6.1.0",
     "cryptr": "^4.0.1",
     "dotenv": "^6.1.0"
   }
