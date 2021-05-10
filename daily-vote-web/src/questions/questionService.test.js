@@ -1,4 +1,4 @@
-import {getLocalQuestionOfTheDay} from "../../..daily-vote-server//questionService";
+import {getQuestionOfTheDay as getLocalQuestionOfTheDay} from "../../../daily-vote-server/locally/provider";
 
 describe("Question of the day", () => {
     describe("Given there are 7 questions and we start on Monday", () => {
