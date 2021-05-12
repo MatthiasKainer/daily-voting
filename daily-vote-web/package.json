@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "luxon": "^1.4.4",
     "react": "^16.6.0",
     "react-chartjs": "^1.2.0",
