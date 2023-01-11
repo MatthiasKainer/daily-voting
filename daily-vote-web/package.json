@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "chart.js": "^2.9.4",
-    "luxon": "^1.4.4",
+    "luxon": "^1.28.1",
     "react": "^16.6.0",
     "react-chartjs": "^1.2.0",
     "react-chartkick": "^0.3.2",
