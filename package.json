@@ -17,7 +17,7 @@
   "author": "mkainer",
   "license": "MIT",
   "dependencies": {
-    "concurrently": "^6.1.0",
+    "concurrently": "^6.5.1",
     "cryptr": "^4.0.1",
     "dotenv": "^6.1.0"
   }
